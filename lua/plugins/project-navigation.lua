@@ -45,6 +45,19 @@ local function close_project_explorers()
   end
 end
 
+local function toggle_project_explorer()
+  if Snacks and Snacks.picker then
+    local ok, pickers = pcall(Snacks.picker.get, { source = "explorer", tab = false })
+    if ok and #pickers > 0 then
+      close_project_explorers()
+      refresh_bufferline()
+      return
+    end
+  end
+
+  open_project_explorer()
+end
+
 local function switch_project(picker, item)
   if not item then
     return
@@ -116,6 +129,29 @@ return {
     opts = {
       picker = {
         sources = {
+          explorer = {
+            win = {
+              input = {
+                keys = {
+                  ["<Esc>"] = false,
+                  ["<C-c>"] = false,
+                  ["q"] = false,
+                },
+              },
+              list = {
+                keys = {
+                  ["<Esc>"] = false,
+                  ["q"] = false,
+                },
+              },
+              preview = {
+                keys = {
+                  ["<Esc>"] = false,
+                  ["q"] = false,
+                },
+              },
+            },
+          },
           projects = {
             dev = {
               "~/Projects",
@@ -127,6 +163,11 @@ return {
       },
     },
     keys = {
+      {
+        "<leader>e",
+        toggle_project_explorer,
+        desc = "Toggle Explorer",
+      },
       {
         "<leader>fp",
         function()

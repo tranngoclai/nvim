@@ -31,3 +31,8 @@ end
 vim.keymap.set("n", "W", delete_file_buffer_without_closing_explorer, { desc = "Delete Buffer" })
 vim.keymap.set("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New Buffer" })
 vim.keymap.set("n", "N", "<cmd>enew<cr>", { desc = "New Buffer" })
+
+-- Prevent accidentally starting macro recording with `q`.
+-- Move macro recording to `<leader>Q` so it requires an intentional keystroke.
+vim.keymap.set("n", "q", "<Nop>", { desc = "Disabled (use <leader>Q to record macro)" })
+vim.keymap.set("n", "<leader>Q", "q", { desc = "Record Macro" })
